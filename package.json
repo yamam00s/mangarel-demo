@@ -19,7 +19,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'; stylelint 'src/**/*.{css,jsx,tsx}'; cd functions/ && eslint 'src/**/*.{js,ts}'",
+    "lint:fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'; stylelint --fix 'src/**/*.{css,jsx,tsx}'; cd functions/ && eslint --fix 'src/**/*.{js,ts}'",
+    "precommit": "lint-staged"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,6 +53,8 @@
     "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-react": "^7.18.3",
     "eslint-plugin-react-hooks": "^2.4.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.7",
     "prettier": "^1.19.1",
     "prettier-stylelint": "^0.4.2",
     "stylelint": "^13.2.0",
@@ -58,5 +63,43 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-order": "^4.0.0",
     "stylelint-processor-styled-components": "^1.10.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "src/**/*.{css,jsx,tsx}": [
+      "stylelint --fix",
+      "git add"
+    ],
+    "functions/src/**/*.{js,ts}": [
+      "cd functions/ && eslint --fix",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "src/**/*.{css,jsx,tsx}": [
+      "stylelint --fix",
+      "git add"
+    ],
+    "functions/src/**/*.{js,ts}": [
+      "cd functions/ && eslint --fix",
+      "git add"
+    ]
   }
 }
