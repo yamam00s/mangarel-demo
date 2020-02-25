@@ -1,0 +1,10 @@
+// In VS Code workspace settings.json
+{
+  "eslint.options": {
+    "parserOptions": {
+      "project": [
+        "./tsconfig.json"
+      ]
+    }
+  }
+}

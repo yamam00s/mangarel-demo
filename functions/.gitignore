@@ -1,8 +1,10 @@
 ## Compiled JavaScript files
-**/*.js
+lib/**/*.js
 **/*.js.map
 
 # Typescript v1 declaration files
 typings/
 
 node_modules/
+
+mangarel-demo-firebase-adminsdk.json
