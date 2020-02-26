@@ -60,7 +60,7 @@ const uploadSeed = async (collection: string, seedFile: string) => {
 
 commander
   .version('0.1.0', '-v, --version')
-  .arguments('<collection><seedFile>')
+  .arguments('<collection> <seedFile>')
   .action(uploadSeed);
 
 commander.parse(process.argv);
