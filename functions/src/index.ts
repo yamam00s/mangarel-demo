@@ -1,8 +1,17 @@
 import * as functions from 'firebase-functions';
+import admin from 'firebase-admin';
+import { collectionName } from './services/mangarel/constants';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-export const helloWorld = functions.https.onRequest((request, response) => {
-  response.send('Hello from Firebase!');
-});
+admin.initializeApp();
+
+export const publishers = functions
+  // リージョンを指定しないとデフォルトで'us-central1'になる
+  .region('asia-northeast1') // firestoreで設定したリージョンに合わせる
+  .https.onRequest(async (req, res) => {
+    const snap = await admin
+      .firestore()
+      .collection(collectionName.publishers)
+      .get();
+    const data = snap.docs.map(doc => doc.data());
+    res.send(data);
+  });
