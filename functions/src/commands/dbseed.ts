@@ -46,6 +46,7 @@ const uploadSeed = async (collection: string, seedFile: string) => {
         // FirestoreドキュメントのIDはドキュメントの外にあるので、オブジェクトからIDとそれ以外のデータを分けて抜き出し
         await ref.doc(id).set(docWithoutId);
       }
+      // レコード数の統計処理
       await addCounter(db, collection, docs.length);
 
       return;

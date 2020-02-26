@@ -9,6 +9,7 @@ export const addCounter = async (
   const doc = db.collection(collectionName.docCounters).doc(collName);
   await doc.set(
     {
+      // トランザクションなしにドキュメントのフィールド値のインクリメント
       count: admin.firestore.FieldValue.increment(count),
       updateAt: admin.firestore.FieldValue.serverTimestamp()
     },
