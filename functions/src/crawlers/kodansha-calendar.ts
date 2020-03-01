@@ -13,7 +13,7 @@ export const feedCalendar = async (page: puppeteer.Page) => {
     for await (const item of items) {
       const memo = { ...blankFeedMemo };
 
-      const releaseData = await item.$eval('.data', e => e.textContent);
+      const releaseData = await item.$eval('.date', e => e.textContent);
       if (releaseData) memo.releaseDate = releaseData.replace(/\./g, '-');
       memo.title = await item.$eval('.tit', e => e.textContent);
       const author = await item.$eval('.name', e => e.textContent);
