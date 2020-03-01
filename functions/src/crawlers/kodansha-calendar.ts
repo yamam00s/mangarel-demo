@@ -1,7 +1,7 @@
 import puppeteer from 'puppeteer';
 import { FeedMemo, blankFeedMemo } from '../services/mangarel/models/feed-memo';
 
-export const feedCalender = async (page: puppeteer.Page) => {
+export const feedCalendar = async (page: puppeteer.Page) => {
   const url = 'http://kc.kodansha.co.jp/calendar';
   await page.goto(url, { waitUntil: 'domcontentloaded' });
 
