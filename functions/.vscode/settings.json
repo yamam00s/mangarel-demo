@@ -2,6 +2,14 @@
   "cSpell.words": [
     "dbseed",
     "mangarel",
-    "pubsub"
-  ]
+    "pubsub",
+    "subdays"
+  ],
+  "eslint.options": {
+    "parserOptions": {
+      "project": [
+        "./tsconfig.json"
+      ]
+    }
+  }
 }
