@@ -4,7 +4,7 @@ import { subDays } from 'date-fns';
 // import puppeteer from 'puppeteer';
 
 import { collectionName } from './services/mangarel/constants';
-import { FeedMemo } from '../services/mangarel/models/feed-memo';
+import { FeedMemo } from './services/mangarel/models/feed-memo';
 import { findBookItem } from './services/rakuten/api';
 import { findOrCreateAuthors } from './firestore-admin/author';
 import { findPublisher } from './firestore-admin/publisher';
@@ -42,51 +42,47 @@ export const registerBooks = functions
     const db = admin.firestore();
     const yesterday = subDays(new Date(), 1);
     const snap = await db
-    .collection(collectionName.feedMemos)
-    .where('isbn', '==', null)
-    .where('fetchedAt', '<', yesterday)
-    .limit(200)
-    .get();
-  let count = 0;
+      .collection(collectionName.feedMemos)
+      .where('isbn', '==', null)
+      .where('fetchedAt', '<', yesterday)
+      .limit(200)
+      .get();
 
-  for await (const doc of snap.docs) {
-    const memo = doc.data() as FeedMemo
-    const title = memo.title || '';
-    const publisherName = memo.publisher || '';
+    let count = 0;
 
-    // rakutenAPIからデータをfetch
-    const bookItem = await findBookItem(
-      { title, publisherName },
-      RAKUTEN_APP_ID
-    )
+    for await (const doc of snap.docs) {
+      const memo = doc.data() as FeedMemo;
+      const title = memo.title || '';
+      const publisherName = memo.publisher || '';
 
-    if (bookItem) {
-      // bookItemからauthorを登録して返す
-      const authors = await findOrCreateAuthors(db, bookItem);
-      // kodanshaのデータをdbから取得
-      const publisher = await findPublisher(db, 'kodansha');
-      // bookItemからbookを登録して返す
-      const book = await createBook(db, memo, bookItem, authors, publisher);
-      // isbnを更新することで２重登録を防ぐ
-      await doc.ref.update({
-        isbn: book.isbn,
-        fetchedAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
-      count += 1;
-    } else {
-      await doc.ref.update({
-        fetchedAt: admin.firestore.FieldValue.serverTimestamp(),
-      });
+      // rakutenAPIからデータをfetch
+      const bookItem = await findBookItem(
+        { title, publisherName },
+        RAKUTEN_APP_ID
+      );
+
+      if (bookItem) {
+        // bookItemからauthorを登録して返す
+        const authors = await findOrCreateAuthors(db, bookItem);
+        // kodanshaのデータをdbから取得
+        const publisher = await findPublisher(db, 'kodansha');
+        // bookItemからbookを登録して返す
+        const book = await createBook(db, memo, bookItem, authors, publisher);
+        // isbnを更新することで２重登録を防ぐ
+        await doc.ref.update({
+          isbn: book.isbn,
+          fetchedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+        count += 1;
+      } else {
+        await doc.ref.update({
+          fetchedAt: admin.firestore.FieldValue.serverTimestamp()
+        });
+      }
+      await sleep(1000);
     }
-    await sleep(1000);
-    }
-  }
-
-
-
-
-
-
+    console.log(`Registered ${count} books.`);
+  });
 
 // export const fetchCalendar = functions
 //   // リージョンを指定しないとデフォルトで'us-central1'になる

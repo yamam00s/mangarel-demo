@@ -42,7 +42,6 @@ export const createBook = async (
   };
 
   const bookRef = db.collection(collectionName.books);
-  // isbnを登録することで２重登録を防ぐ
   await bookRef.doc(book.isbn).set({
     ...book,
     createdAt: admin.firestore.FieldValue.serverTimestamp(),
