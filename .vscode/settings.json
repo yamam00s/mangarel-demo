@@ -3,5 +3,12 @@
     "mangarel",
     "precommit",
     "stylelint"
-  ]
+  ],
+  "eslint.options": {
+    "parserOptions": {
+      "project": [
+        "./tsconfig.json"
+      ]
+    }
+  }
 }
