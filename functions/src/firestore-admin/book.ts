@@ -10,6 +10,7 @@ import { FeedMemo } from '../services/mangarel/models/feed-memo';
 import { addCounter } from './record-counter';
 import { uniform } from '../utils/text-processor';
 
+// 単行本のデータを保存する
 export const createBook = async (
   db: admin.firestore.Firestore,
   memo: FeedMemo,
@@ -41,6 +42,7 @@ export const createBook = async (
   };
 
   const bookRef = db.collection(collectionName.books);
+  // isbnを登録することで２重登録を防ぐ
   await bookRef.doc(book.isbn).set({
     ...book,
     createdAt: admin.firestore.FieldValue.serverTimestamp(),

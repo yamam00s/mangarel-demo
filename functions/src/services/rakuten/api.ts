@@ -21,6 +21,7 @@ const defaultSearchParams: SearchParams = {
   outOfStockFlag: 1 // 絶版も検索対象にする
 };
 
+// 楽天ブックスAPI アクセス
 export const findBookItem = async (
   params: SearchParams,
   applicationId: string
@@ -28,13 +29,14 @@ export const findBookItem = async (
   const searchParams: SearchParams = { ...defaultSearchParams, ...params };
   const queries = new URLSearchParams();
 
+  // 検索のための URL queries を作成
   forEach(searchParams, (v, k) => {
     const value = String(v || '').trim();
     if (value) queries.set(k, value);
   });
 
   queries.set('applicationId', applicationId);
-
+  // rakutenのページへqueriesをsetしてfetch
   const url = `${BASE_URL}?${queries.toString()}`;
   const bookItems: BookItem[] = [];
   const res = await fetch(url);
