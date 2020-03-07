@@ -30,5 +30,5 @@ export const blankBook: Book = {
   hasImage: false,
   publishedOn: null,
   createdAt: null,
-  updatedAt: null,
+  updatedAt: null
 };

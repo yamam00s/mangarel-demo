@@ -22,6 +22,7 @@ export const createBook = async (
   const match = itemUrl.match(/books.rakuten.co.jp\/rb\/(\d+)/);
   const rbCode = match ? match[1] : '';
   const hasImage = /\.jpg/.test(largeImageUrl);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const publishDate = parseFromTimeZone(memo.releaseDate!, {
     timeZone: 'Asia/Tokyo'
   });
@@ -31,8 +32,10 @@ export const createBook = async (
     ...blankBook,
     title: uniform(title),
     titleReading: uniform(titleKana),
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     publisherId: publisher.id!,
     publisher,
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     authorIds: authors.map(a => a.id!),
     authors,
     isbn,

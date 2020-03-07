@@ -28,7 +28,8 @@ const RAKUTEN_APP_ID = rakutenId.id;
 //   headless: true
 // };
 
-// admin.initializeApp();
+// 必ず行う
+admin.initializeApp();
 
 export const registerBooks = functions
   .region('asia-northeast1') // firestoreで設定したリージョンに合わせる
@@ -81,6 +82,7 @@ export const registerBooks = functions
       }
       await sleep(1000);
     }
+    // eslint-disable-next-line no-console
     console.log(`Registered ${count} books.`);
   });
 
