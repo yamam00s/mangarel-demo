@@ -10,6 +10,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "firebase": "^7.10.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-scripts": "3.4.0",
@@ -63,25 +64,6 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-order": "^4.0.0",
     "stylelint-processor-styled-components": "^1.10.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "src/**/*.{css,jsx,tsx}": [
-      "stylelint --fix",
-      "git add"
-    ],
-    "functions/src/**/*.{js,ts}": [
-      "cd functions/ && eslint --fix",
-      "git add"
-    ]
   },
   "husky": {
     "hooks": {

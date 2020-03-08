@@ -55,6 +55,7 @@ module.exports = {
     'newline-before-return': 'error',
     'no-console': 'warn',
     'no-continue': 'off',
+    "prettier/prettier": ['error', { "singleQuote": true }],
     quotes: ['error', 'single', { avoidEscape: true }],
     'require-yield': 'error',
     semi: ['error', 'always'],
