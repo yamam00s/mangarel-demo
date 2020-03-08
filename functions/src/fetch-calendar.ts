@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import * as functions from 'firebase-functions';
 import admin from 'firebase-admin';
 import puppeteer from 'puppeteer';
@@ -18,7 +19,7 @@ const PUPPETEER_OPTIONS = {
   headless: true
 };
 
-export const fetchCalendar = functions
+module.exports = functions
   // リージョンを指定しないとデフォルトで'us-central1'になる
   .region('asia-northeast1') // firestoreで設定したリージョンに合わせる
   .runWith({
