@@ -4,7 +4,12 @@ import admin from 'firebase-admin';
 import forEach from 'lodash/forEach';
 import { isDevelopment } from './utils/env';
 
-admin.initializeApp();
+import serviceAccount from './mangarel-demo-firebase-adminsdk.json';
+
+// Firebase Admin SDKの初期化（nodeアプリケーションの場合必要）
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount as admin.ServiceAccount)
+});
 
 const functionMap = {
   fetchCalendar: './fetch-calendar',
@@ -12,7 +17,8 @@ const functionMap = {
 };
 
 const devFunctionMap = {
-  publishers: './publishers'
+  publishers: './publishers',
+  searchBooks: './search-books'
 };
 
 const loadFunctions = (fnMap: typeof functionMap) => {
