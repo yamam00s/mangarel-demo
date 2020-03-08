@@ -141,11 +141,12 @@ export const chopChink = (text: string) =>
     .trim();
 
 export const normalize = (text: string | null) =>
-  halfWiden(kanaFullWiden(text || ''))
-    .replace(/[☆★♪×・、。]/g, '')
-    .replace(/[-*/&!?@_,.:;"']/g, '')
-    .replace(/\s+/g, '')
-    .toLowerCase();
+  halfWiden(hira2kata(kanaFullWiden(text || '')))
+  .replace(/[☆★♪×・、。]/g, '')
+  .replace(/[-*/&!?@_,.:;"']/g, '')
+  .replace(/\s+/g, '')
+  .toLowerCase()
+  .replace(/[()〔〕「」『』【】[\]]/g, '');
   ;
 
 export const uniform = (text: string | null) =>
