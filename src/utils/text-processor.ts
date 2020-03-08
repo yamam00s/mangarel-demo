@@ -1,4 +1,6 @@
 /* eslint-disable prettier/prettier */
+import { uniq } from 'lodash';
+import { bigram } from './n-gram';
 
 // 数値やアルファベットの全角文字を半角にする
 export const halfWiden = (text: string) =>
@@ -121,6 +123,23 @@ export const kanaFullWiden = (text: string) => {
     .replace(/ﾟ/g, '゜');
 };
 
+// 、句読点や記号の区切りで切ったりくっつけたりする
+export const chopChink = (text: string) =>
+  text
+    .replace(/[-/&!?@_,.:;"'~]/g, ' ')
+    .replace(/[−‐―／＆！？＿，．：；“”‘’〜～]/g, ' ')
+    .replace(/[♪、。]/g, ' ')
+    .replace(/[・×☆★*＊]/g, '')
+    .replace(/\(([^)]*)\)/g, ' $1')
+    .replace(/（([^〕]*)）/g, ' $1')
+    .replace(/〔([^〕]*)〕/g, ' $1')
+    .replace(/「([^」]*)」/g, ' $1')
+    .replace(/『([^』]*)』/g, ' $1')
+    .replace(/【([^】]*)】/g, ' $1')
+    .replace(/\[([^\]]*)\]/g, ' $1')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+
 export const normalize = (text: string | null) =>
   halfWiden(kanaFullWiden(text || ''))
     .replace(/[☆★♪×・、。]/g, '')
@@ -129,7 +148,34 @@ export const normalize = (text: string | null) =>
     .toLowerCase();
   ;
 
-  export const uniform = (text: string | null) =>
-  halfWiden(kanaFullWiden(text || ''))
-    .replace(/\s+/g, ' ')
-    .trim();
+export const uniform = (text: string | null) =>
+halfWiden(kanaFullWiden(text || ''))
+  .replace(/\s+/g, ' ')
+  .trim();
+
+export const tokenize = (...words: string[]) => {
+  const resultArr: string[] = [];
+  let preVal = '';
+
+  halfWiden(hira2kata(kanaFullWiden(chopChink(words.join(' ')))))
+    .toLowerCase()
+    .split(' ')
+    .forEach(val => {
+      // あと英数字はbi-gramをかけない
+      if (val.match(/^[0-9a-z+]+$/)) {
+        if (val.length > 3 && val.match(/[sS]$/)) {
+          resultArr.push(val.substring(0, val.length - 1));
+        } else {
+          resultArr.push(val);
+        }
+        preVal = '';
+      } else if (val.length === 1 && /^[亜-黑]+$/u.test(val)) {
+        preVal = val;
+      } else {
+        bigram(`${preVal}${val}`).forEach(cut => resultArr.push(cut));
+        preVal = '';
+      }
+    });
+
+    return uniq(resultArr);
+};
