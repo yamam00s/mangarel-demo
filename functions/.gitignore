@@ -9,3 +9,4 @@ node_modules/
 
 mangarel-demo-firebase-adminsdk.json
 mangarel-demo-rakuten-app-id.json
+.runtimeconfig.json
