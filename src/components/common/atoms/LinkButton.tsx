@@ -9,7 +9,7 @@ type LinkButton = {
   link?: string;
   icon?: SemanticICONS;
   iconElement?: JSX.Element;
-  disable: boolean;
+  disable?: boolean;
 };
 
 const LinkButton: FC<LinkButton> = ({
