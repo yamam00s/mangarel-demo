@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { useContext, useEffect, useRef, useState } from 'react';
 
-import { Book } from '../service/mangarel/models/book';
-import { collectionName } from '../service/mangarel/constants';
-import { FirebaseContext } from '../contexts';
-import { tokenize } from '../utils/text-processor';
+import { collectionName } from 'services/mangarel/constants';
+import { Book } from 'services/mangarel/models/book';
+import { FirebaseContext } from 'contexts';
+import { tokenize } from 'utils/text-processor';
 
 type SearchOptions = {
   limit?: number;

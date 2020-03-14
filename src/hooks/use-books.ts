@@ -2,9 +2,9 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { startOfDay } from 'date-fns';
 
-import { Book } from '../service/mangarel/models/book';
-import { collectionName } from '../service/mangarel/constants';
-import { FirebaseContext } from '../contexts';
+import { Book } from 'services/mangarel/models/book';
+import { collectionName } from 'services/mangarel/constants';
+import { FirebaseContext } from 'contexts';
 
 type BooksOptions = {
   limit?: number;

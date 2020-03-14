@@ -2,7 +2,7 @@ import React, { FC, useContext } from 'react';
 import styled from '@emotion/styled';
 import Card from 'semantic-ui-react/dist/commonjs/views/Card';
 import { CardContentProps } from 'semantic-ui-react/dist/commonjs/views/Card/CardContent';
-import { ThemeContext } from '../../../contexts';
+import { ThemeContext } from 'contexts';
 
 const CardContent: FC<CardContentProps> = ({ children, ...props }) => {
   const theme = useContext(ThemeContext);

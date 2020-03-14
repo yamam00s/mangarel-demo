@@ -1,6 +1,6 @@
 import React, { FC, useContext } from 'react';
 import styled from '@emotion/styled';
-import { ThemeContext } from '../../../contexts';
+import { ThemeContext } from 'contexts';
 
 const CardContent: FC = ({ children, ...props }) => {
   const theme = useContext(ThemeContext);
