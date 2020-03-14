@@ -3,12 +3,11 @@ import { format } from 'date-fns';
 
 import { Book } from 'services/mangarel/models/book';
 
-export const getAuthorsText = (book: Book) => {
+export const getAuthorsText = (book: Book) =>
   (book.authors || [])
     .map(author => author.name)
     .join(', ')
     .replace(/\s*\(\)/g, '');
-};
 
 export const getCoverImage = (
   book: Book,
